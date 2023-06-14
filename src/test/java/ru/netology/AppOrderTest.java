@@ -1,6 +1,5 @@
 package ru.netology;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,27 +11,31 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+
 public class AppOrderTest {
+
     private WebDriver driver;
 
     @BeforeAll
-    public static void setUpAll() {
+    public static void setupAll() {
         WebDriverManager.chromedriver().setup();
     }
 
+    @AfterEach
+    void teardown() {
+        driver.quit();
+        driver = null;
+    }
+
     @BeforeEach
-    public void setUp() {
+    public void beforeEach() {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--no-sandbox");
         options.addArguments("--headless");
         driver = new ChromeDriver(options);
-    }
-
-    @AfterEach
-    public void tearDown() {
-        driver.quit();
-        driver = null;
     }
 
     @Test
